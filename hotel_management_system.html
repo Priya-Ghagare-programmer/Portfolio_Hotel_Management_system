@@ -1,0 +1,2956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LuxeStay | Hotel Management System</title>
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Bootstrap Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    rel="stylesheet"
+  >
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    /* =========================
+       GLOBAL
+    ========================= */
+
+    :root {
+      --navy: #0b1727;
+      --navy-light: #142a43;
+      --gold: #c9a86a;
+      --gold-light: #e6cc95;
+      --cream: #f7f4ed;
+      --text-muted: #718096;
+      --border: #e7e2d8;
+      --success: #35a477;
+      --danger: #df6868;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", sans-serif;
+      color: var(--navy);
+      background: #142a43;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: "Playfair Display", serif;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    .navbar {
+      background: rgba(11, 23, 39, 0.94) !important;
+      backdrop-filter: blur(15px);
+      transition: 0.3s;
+    }
+
+    .navbar-brand {
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+      color: white !important;
+    }
+
+    .brand-dot {
+      color: var(--gold);
+    }
+
+    .nav-link {
+      color: #dbe4ee !important;
+      font-size: 0.9rem;
+      margin: 0 6px;
+      transition: 0.3s;
+    }
+
+    .nav-link:hover {
+      color: var(--gold-light) !important;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      font-weight: 700;
+      padding: 11px 20px;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      color: var(--navy);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(201, 168, 106, 0.25);
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 730px;
+
+      display: flex;
+      align-items: center;
+
+      position: relative;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(6, 16, 29, 0.94),
+          rgba(8, 21, 36, 0.72),
+          rgba(8, 21, 36, 0.30)
+        ),
+        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2000&q=85")
+        center/cover;
+    }
+
+    .hero::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle at 70% 45%,
+          rgba(201, 168, 106, 0.15),
+          transparent 30%
+        );
+
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+
+      padding-top: 70px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+
+      color: var(--gold-light);
+
+      font-size: 0.75rem;
+      font-weight: 700;
+
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+
+      width: 30px;
+      height: 1px;
+
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-size: clamp(3.2rem, 6vw, 5.8rem);
+
+      line-height: 0.98;
+
+      max-width: 800px;
+
+      margin: 22px 0;
+    }
+
+    .hero h1 span {
+      color: var(--gold-light);
+    }
+
+    .hero p {
+      max-width: 650px;
+
+      color: #d3dce6;
+
+      font-size: 1.08rem;
+
+      line-height: 1.8;
+    }
+
+    .hero-stats {
+      display: flex;
+
+      gap: 38px;
+
+      margin-top: 40px;
+
+      flex-wrap: wrap;
+    }
+
+    .stat strong {
+      display: block;
+
+      font-size: 1.5rem;
+    }
+
+    .stat small {
+      color: #aab8c8;
+    }
+
+    /* =========================
+       FLOATING CARD
+    ========================= */
+
+    .floating-card {
+      position: absolute;
+
+      right: 7%;
+      bottom: 12%;
+
+      width: 285px;
+
+      background: rgba(255, 255, 255, 0.96);
+
+      color: var(--navy);
+
+      padding: 22px;
+
+      border-radius: 18px;
+
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
+
+      animation: floatingCard 4s ease-in-out infinite;
+
+      z-index: 3;
+    }
+
+    @keyframes floatingCard {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-13px);
+      }
+
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    .section {
+      padding: 110px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-soft {
+      background:
+        radial-gradient(circle at 85% 12%, rgba(201,168,106,.18), transparent 25%),
+        linear-gradient(135deg, #e9e0cf 0%, #dce3ea 100%);
+    }
+
+    .section-light {
+      background:
+        radial-gradient(circle at 12% 18%, rgba(201,168,106,.16), transparent 24%),
+        radial-gradient(circle at 88% 80%, rgba(20,42,67,.10), transparent 28%),
+        linear-gradient(135deg, #d7e0e8 0%, #eef0ec 52%, #e3d9c8 100%);
+    }
+
+    .section-dark {
+      background:
+        radial-gradient(circle at 80% 20%, rgba(201,168,106,.18), transparent 30%),
+        radial-gradient(circle at 10% 85%, rgba(55,105,145,.20), transparent 28%),
+        linear-gradient(135deg, #06101d 0%, #0d2238 55%, #162f4a 100%);
+      color: white;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(201, 168, 106, 0.07);
+      top: -140px;
+      right: -100px;
+      filter: blur(10px);
+      animation: sectionGlow 8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes sectionGlow {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(-30px, 30px) scale(1.15); }
+    }
+
+
+    .overview-section {
+      background:
+        radial-gradient(circle at 78% 18%, rgba(201,168,106,.20), transparent 26%),
+        linear-gradient(135deg, #d5dfe8 0%, #eef0ed 58%, #ded3c1 100%);
+    }
+
+    .section-dark .section-copy { color: #aebccc; }
+    .section-dark .section-title { color: white; }
+    .section-dark .eyebrow { color: var(--gold-light) !important; }
+
+    .section-title {
+      position: relative;
+    }
+
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 55px;
+      height: 3px;
+      margin-top: 20px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.4s ease;
+    }
+
+    .section-title:hover::after { width: 95px; }
+
+    .section-title {
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+
+      line-height: 1.08;
+    }
+
+    .section-copy {
+      color: var(--text-muted);
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       SCROLL ANIMATION
+    ========================= */
+
+    .reveal {
+      opacity: 0;
+
+      transform: translateY(35px);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    /* =========================
+       FEATURE CARDS
+    ========================= */
+
+    .feature-card {
+      height: 100%;
+      padding: 32px;
+      border: 1px solid rgba(201, 168, 106, 0.22);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.93);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      transition: transform 0.45s cubic-bezier(.2,.8,.2,1), box-shadow 0.45s ease, border-color 0.45s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(11, 23, 39, 0.06);
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,106,0.18), transparent 70%);
+      right: -90px;
+      top: -90px;
+      transition: 0.6s ease;
+    }
+
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,106,0.16);
+      right: -30px;
+      top: -30px;
+      transition: 0.5s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-14px);
+      border-color: rgba(201,168,106,0.6);
+      box-shadow: 0 25px 60px rgba(11,23,39,0.13), 0 0 0 1px rgba(201,168,106,0.08);
+    }
+
+    .feature-card:hover::before { transform: scale(1.8); }
+    .feature-card:hover::after { transform: scale(2.2); }
+
+    .icon-box {
+      width: 58px;
+      height: 58px;
+      border-radius: 17px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #f5eee0, #e9dfc9);
+      color: #9a773d;
+      font-size: 1.35rem;
+      margin-bottom: 25px;
+      position: relative;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .feature-card:hover .icon-box {
+      transform: rotate(-6deg) scale(1.12);
+      box-shadow: 0 10px 25px rgba(201,168,106,0.22);
+    }
+
+    .feature-card h4 {
+      font-family: "DM Sans", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      margin: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    .dashboard {
+      background: white;
+
+      border: 1px solid #e8eaf0;
+
+      border-radius: 24px;
+
+      box-shadow: 0 30px 80px rgba(11, 23, 39, 0.12);
+
+      overflow: hidden;
+    }
+
+    .dash-top {
+      background: #f8fafc;
+
+      border-bottom: 1px solid #edf0f3;
+
+      padding: 16px 20px;
+    }
+
+    .window-dots span {
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
+      display: inline-block;
+
+      margin-right: 5px;
+
+      background: #d5dbe2;
+    }
+
+    .dash-body {
+      display: flex;
+
+      min-height: 440px;
+    }
+
+    .side {
+      width: 205px;
+
+      background: var(--navy);
+
+      color: white;
+
+      padding: 22px 13px;
+    }
+
+    .mini-brand {
+      font-family: "Playfair Display", serif;
+
+      font-size: 1.1rem;
+
+      padding: 0 10px 25px;
+    }
+
+    .side-item {
+      padding: 10px 12px;
+
+      border-radius: 9px;
+
+      color: #aebccc;
+
+      font-size: 0.78rem;
+
+      margin: 3px 0;
+
+      transition: 0.25s;
+    }
+
+    .side-item.active,
+    .side-item:hover {
+      background: rgba(201, 168, 106, 0.16);
+
+      color: var(--gold-light);
+    }
+
+    .dash-main {
+      flex: 1;
+
+      background: #f8fafc;
+
+      padding: 24px;
+    }
+
+    .kpi {
+      background: white;
+
+      border: 1px solid #edf0f3;
+
+      border-radius: 14px;
+
+      padding: 16px;
+    }
+
+    .kpi small {
+      color: #8a96a5;
+    }
+
+    .kpi strong {
+      display: block;
+
+      font-size: 1.35rem;
+
+      margin-top: 5px;
+    }
+
+    .table-card {
+      background: white;
+
+      border: 1px solid #edf0f3;
+
+      border-radius: 14px;
+
+      padding: 17px;
+    }
+
+    /* =========================
+       MODULES
+    ========================= */
+
+    .module {
+      padding: 36px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #132b45, #0b192b);
+      border: 1px solid rgba(201,168,106,0.13);
+      color: white;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
+    }
+
+    .module::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(201,168,106,0.18);
+      border-radius: 50%;
+      right: -80px;
+      top: -80px;
+      transition: 0.5s;
+    }
+
+    .module:hover {
+      transform: translateY(-12px) scale(1.015);
+      border-color: rgba(201,168,106,0.45);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.28), 0 0 30px rgba(201,168,106,0.06);
+    }
+
+    .module:hover::after { transform: scale(1.5); }
+
+    .module h3, .module p, .module ul, .module-num {
+      position: relative;
+      z-index: 2;
+    }
+
+    .module-num {
+      font-size: 0.75rem;
+
+      color: var(--gold-light);
+
+      letter-spacing: 2px;
+    }
+
+    .module h3 {
+      font-size: 1.65rem;
+
+      margin: 12px 0;
+    }
+
+    .module p {
+      color: #aebccc;
+
+      line-height: 1.7;
+
+      font-size: 0.9rem;
+    }
+
+    .module ul {
+      list-style: none;
+
+      padding: 0;
+
+      margin: 22px 0 0;
+    }
+
+    .module li {
+      padding: 8px 0;
+
+      color: #d9e0e8;
+
+      font-size: 0.87rem;
+    }
+
+    .module li i {
+      color: var(--gold-light);
+
+      margin-right: 8px;
+    }
+
+    /* =========================
+       ROOMS
+    ========================= */
+
+    .room-card {
+      border-radius: 18px;
+
+      overflow: hidden;
+
+      background: white;
+
+      border: 1px solid var(--border);
+
+      transition: 0.35s;
+
+      height: 100%;
+    }
+
+    .room-card:hover {
+      transform: translateY(-8px);
+
+      box-shadow: 0 22px 45px rgba(11, 23, 39, 0.12);
+    }
+
+    .room-img {
+      height: 210px;
+
+      object-fit: cover;
+
+      width: 100%;
+
+      transition: 0.5s;
+    }
+
+    .room-card:hover .room-img {
+      transform: scale(1.04);
+    }
+
+    .room-body {
+      padding: 22px;
+    }
+
+    .badge-soft {
+      background: #edf8f3;
+
+      color: #2b8b66;
+
+      padding: 6px 10px;
+
+      border-radius: 20px;
+
+      font-size: 0.72rem;
+
+      font-weight: 700;
+    }
+
+    .price {
+      font-size: 1.35rem;
+
+      font-weight: 700;
+    }
+
+    /* =========================
+       WORKFLOW
+    ========================= */
+
+    .process-line {
+      position: relative;
+    }
+
+    .process-line::before {
+      content: "";
+
+      position: absolute;
+
+      top: 28px;
+
+      left: 10%;
+      right: 10%;
+
+      height: 1px;
+
+      background: #ddd5c4;
+    }
+
+    .process-step {
+      text-align: center;
+
+      position: relative;
+    }
+
+    .step-circle {
+      width: 57px;
+      height: 57px;
+
+      border-radius: 50%;
+
+      display: grid;
+
+      place-items: center;
+
+      margin: auto;
+
+      background: var(--navy);
+
+      color: var(--gold-light);
+
+      font-weight: 700;
+
+      border: 5px solid white;
+
+      box-shadow: 0 0 0 1px #ded6c7;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .process-step:hover .step-circle {
+      transform: scale(1.12);
+      box-shadow: 0 12px 30px rgba(11,23,39,0.20), 0 0 0 6px rgba(201,168,106,0.10);
+    }
+
+    /* =========================
+       TESTIMONIAL
+    ========================= */
+
+    .testimonial {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 20px;
+
+      padding: 30px;
+
+      height: 100%;
+
+      transition: 0.3s;
+    }
+
+    .testimonial:hover {
+      transform: translateY(-6px);
+
+      box-shadow: 0 20px 45px rgba(11, 23, 39, 0.08);
+    }
+
+    .quote {
+      font-family: "Playfair Display", serif;
+
+      font-size: 1.2rem;
+
+      line-height: 1.65;
+    }
+
+    .avatar {
+      width: 45px;
+      height: 45px;
+
+      border-radius: 50%;
+
+      display: grid;
+
+      place-items: center;
+
+      background: #eae3d4;
+
+      color: #72582c;
+
+      font-weight: 700;
+    }
+
+    .section-dark .testimonial {
+      background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      backdrop-filter: blur(12px);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .section-dark .testimonial:hover {
+      transform: translateY(-10px);
+      border-color: rgba(201,168,106,0.45);
+    }
+
+    .section-dark .testimonial .quote { color: #e6ebf1; }
+    .section-dark .testimonial .small { color: #aebccc !important; }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta {
+      background:
+        linear-gradient(
+          120deg,
+          var(--navy),
+          #1a314c
+        );
+
+      color: white;
+
+      border-radius: 28px;
+
+      padding: 65px;
+
+      position: relative;
+
+      overflow: hidden;
+    }
+
+    .cta::after {
+      content: "";
+
+      position: absolute;
+
+      width: 360px;
+      height: 360px;
+
+      border-radius: 50%;
+
+      border: 1px solid rgba(201, 168, 106, 0.2);
+
+      right: -130px;
+      top: -160px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      background: #07111e;
+
+      color: #91a0b2;
+
+      padding: 50px 0;
+    }
+
+    .footer-brand {
+      color: white;
+
+      font-family: "Playfair Display", serif;
+
+      font-size: 1.35rem;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 991px) {
+
+      .floating-card {
+        display: none;
+      }
+
+      .side {
+        width: 155px;
+      }
+
+    }
+
+    @media (max-width: 767px) {
+
+      .section {
+        padding: 75px 0;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .side {
+        display: none;
+      }
+
+      .dash-main {
+        padding: 15px;
+      }
+
+      .process-line::before {
+        display: none;
+      }
+
+      .cta {
+        padding: 40px 25px;
+      }
+
+    }
+
+  
+
+/* =========================================================
+   FINAL GLOBAL THEME - APPLY BACKGROUND TO EVERY SECTION
+   ========================================================= */
+html, body {
+  background: #dfe5eb !important;
+}
+
+body {
+  color: #0b1727;
+}
+
+/* Every major section gets a visible background */
+section.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* 01 - Product Overview */
+#overview {
+  background:
+    radial-gradient(circle at 12% 20%, rgba(201,168,106,.18) 0, transparent 28%),
+    radial-gradient(circle at 88% 80%, rgba(20,42,67,.10) 0, transparent 30%),
+    linear-gradient(135deg, #e2e8ee 0%, #f1ece2 52%, #dce4eb 100%) !important;
+}
+
+/* 02 - Dashboard */
+#dashboard {
+  background:
+    radial-gradient(circle at 85% 15%, rgba(201,168,106,.20) 0, transparent 25%),
+    linear-gradient(135deg, #eee9df 0%, #dfe6ed 100%) !important;
+}
+
+/* 03 - Core Modules */
+#modules {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(201,168,106,.12) 0, transparent 25%),
+    radial-gradient(circle at 90% 85%, rgba(72,105,135,.25) 0, transparent 30%),
+    linear-gradient(135deg, #07111e 0%, #102a44 55%, #081725 100%) !important;
+}
+
+/* 04 - Rooms */
+#rooms {
+  background:
+    radial-gradient(circle at 90% 10%, rgba(201,168,106,.18) 0, transparent 28%),
+    linear-gradient(135deg, #d9e1e8 0%, #f1ede5 48%, #dce5ec 100%) !important;
+}
+
+/* 05 - Workflow */
+#workflow {
+  background:
+    radial-gradient(circle at 10% 80%, rgba(201,168,106,.16) 0, transparent 25%),
+    linear-gradient(135deg, #eee9df 0%, #dce5ec 100%) !important;
+}
+
+/* 06 - Testimonials */
+#testimonials,
+.testimonial-section {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(201,168,106,.15) 0, transparent 28%),
+    linear-gradient(135deg, #081523 0%, #102a43 55%, #07111e 100%) !important;
+}
+
+/* 07 - Final CTA */
+#contact {
+  background:
+    radial-gradient(circle at 15% 25%, rgba(201,168,106,.13) 0, transparent 28%),
+    linear-gradient(135deg, #dbe3ea 0%, #eee8dc 100%) !important;
+}
+
+/* Give the CTA itself stronger contrast */
+#contact .cta {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(201,168,106,.20), transparent 30%),
+    linear-gradient(120deg, #07111e, #173653) !important;
+  box-shadow: 0 30px 80px rgba(7,17,30,.20);
+}
+
+/* Section content stays above decorative layers */
+section.section > .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Stronger cards on light sections */
+#overview .feature-card,
+#rooms .room-card,
+#workflow .process-step,
+#dashboard .dashboard,
+.testimonial-section .testimonial {
+  position: relative;
+  z-index: 2;
+}
+
+#overview .feature-card {
+  background: rgba(255,255,255,.90) !important;
+  border: 1px solid rgba(11,23,39,.10);
+}
+
+#rooms .room-card {
+  background: rgba(255,255,255,.94) !important;
+}
+
+/* Make dark section text clearly visible */
+#modules,
+#modules .section-title,
+#modules h3,
+.testimonial-section,
+.testimonial-section .section-title {
+  color: #fff;
+}
+
+#modules .section-copy,
+.testimonial-section .section-copy {
+  color: #b7c3d0 !important;
+}
+
+/* Visible separators between sections */
+section.section:not(.section-dark) {
+  border-top: 1px solid rgba(11,23,39,.07);
+  border-bottom: 1px solid rgba(11,23,39,.05);
+}
+
+/* Decorative section blobs */
+section.section::before {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  right: -180px;
+  top: -180px;
+  background: radial-gradient(circle, rgba(201,168,106,.13), transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+  animation: pageGlow 9s ease-in-out infinite alternate;
+}
+
+section.section::after {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  left: -150px;
+  bottom: -150px;
+  background: radial-gradient(circle, rgba(20,42,67,.09), transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#modules::after,
+.testimonial-section::after {
+  background: radial-gradient(circle, rgba(201,168,106,.10), transparent 68%);
+}
+
+@keyframes pageGlow {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to { transform: translate3d(-25px,25px,0) scale(1.12); }
+}
+
+/* Mobile: keep backgrounds strong */
+@media (max-width: 767px) {
+  section.section {
+    padding: 75px 0;
+  }
+
+  #overview,
+  #dashboard,
+  #rooms,
+  #workflow,
+  #contact {
+    background-size: auto, auto, cover !important;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ======================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+
+  <div class="container">
+
+    <a class="navbar-brand" href="#home">
+      LuxeStay<span class="brand-dot">.</span>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+
+        <li class="nav-item">
+          <a class="nav-link" href="#overview">
+            Overview
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#dashboard">
+            Dashboard
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#modules">
+            Modules
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#rooms">
+            Rooms
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#workflow">
+            Workflow
+          </a>
+        </li>
+
+        <li class="nav-item ms-lg-2">
+          <a class="btn btn-gold" href="#contact">
+            View Project
+            <i class="bi bi-arrow-up-right"></i>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<header class="hero" id="home">
+
+  <div class="container hero-content">
+
+    <div class="eyebrow reveal">
+      Hotel Operations Platform
+    </div>
+
+    <h1 class="reveal delay-1">
+      Run your hotel with
+      <span>clarity.</span>
+    </h1>
+
+    <p class="reveal delay-2">
+      A modern hotel management system designed to bring
+      reservations, guests, rooms, staff, payments and daily
+      operations into one elegant workspace.
+    </p>
+
+    <div class="d-flex gap-3 mt-4 flex-wrap reveal delay-3">
+
+      <a href="#dashboard" class="btn btn-gold btn-lg">
+        Explore Dashboard
+        <i class="bi bi-arrow-down"></i>
+      </a>
+
+      <a href="#modules" class="btn btn-outline-light btn-lg">
+        Explore Features
+      </a>
+
+    </div>
+
+
+    <div class="hero-stats reveal delay-3">
+
+      <div class="stat">
+        <strong>24/7</strong>
+        <small>Operations visibility</small>
+      </div>
+
+      <div class="stat">
+        <strong>360°</strong>
+        <small>Guest overview</small>
+      </div>
+
+      <div class="stat">
+        <strong>12+</strong>
+        <small>Core workflows</small>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- FLOATING STAT CARD -->
+
+  <div class="floating-card">
+
+    <div class="d-flex justify-content-between mb-3">
+
+      <span class="small text-secondary">
+        Today's occupancy
+      </span>
+
+      <i class="bi bi-three-dots"></i>
+
+    </div>
+
+
+    <div class="d-flex align-items-end justify-content-between">
+
+      <div>
+
+        <strong style="font-size:2.2rem">
+          82%
+        </strong>
+
+        <div class="text-success small">
+          <i class="bi bi-arrow-up"></i>
+          6.4% this week
+        </div>
+
+      </div>
+
+      <div class="text-end small text-secondary">
+        156 / 190
+        <br>
+        rooms occupied
+      </div>
+
+    </div>
+
+
+    <div class="progress mt-3">
+
+      <div
+        class="progress-bar"
+        style="width:82%;background:#c9a86a"
+      ></div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- ======================================================
+     OVERVIEW
+====================================================== -->
+
+<section class="section section-light overview-section" id="overview">
+
+  <div class="container">
+
+    <div class="row align-items-end mb-5">
+
+      <div class="col-lg-7 reveal">
+
+        <div class="eyebrow" style="color:#9a773d">
+          Product Overview
+        </div>
+
+        <h2 class="section-title mt-3">
+          Everything your front desk needs,
+          beautifully organized.
+        </h2>
+
+      </div>
+
+
+      <div class="col-lg-4 ms-auto reveal">
+
+        <p class="section-copy mb-0">
+
+          Built around real hotel workflows, the interface
+          reduces repetitive work and gives managers a clear
+          view of what is happening across the property.
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+      <!-- CARD 1 -->
+
+      <div class="col-md-6 col-lg-3 reveal">
+
+        <div class="feature-card">
+
+          <div class="icon-box">
+            <i class="bi bi-calendar2-check"></i>
+          </div>
+
+          <h4>
+            Smart Reservations
+          </h4>
+
+          <p>
+            Search availability, create bookings,
+            manage check-in and prevent scheduling conflicts.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- CARD 2 -->
+
+      <div class="col-md-6 col-lg-3 reveal delay-1">
+
+        <div class="feature-card">
+
+          <div class="icon-box">
+            <i class="bi bi-door-open"></i>
+          </div>
+
+          <h4>
+            Room Control
+          </h4>
+
+          <p>
+            Track room status, housekeeping progress,
+            maintenance and occupancy at a glance.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- CARD 3 -->
+
+      <div class="col-md-6 col-lg-3 reveal delay-2">
+
+        <div class="feature-card">
+
+          <div class="icon-box">
+            <i class="bi bi-people"></i>
+          </div>
+
+          <h4>
+            Guest Management
+          </h4>
+
+          <p>
+            Keep guest profiles, preferences, stay history
+            and requests in one workspace.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- CARD 4 -->
+
+      <div class="col-md-6 col-lg-3 reveal delay-3">
+
+        <div class="feature-card">
+
+          <div class="icon-box">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+
+          <h4>
+            Business Insights
+          </h4>
+
+          <p>
+            Understand revenue, occupancy, bookings
+            and operational performance.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     DASHBOARD
+====================================================== -->
+
+<section class="section section-soft" id="dashboard">
+
+  <div class="container">
+
+    <div class="row align-items-center g-5">
+
+
+      <div class="col-lg-5 reveal">
+
+        <div class="eyebrow" style="color:#9a773d">
+          Dashboard Experience
+        </div>
+
+        <h2 class="section-title mt-3">
+          A command center for your entire property.
+        </h2>
+
+        <p class="section-copy mt-4">
+
+          The dashboard prioritizes the information hotel teams
+          need most: today's arrivals, departures, occupancy,
+          room status, revenue and pending tasks.
+
+        </p>
+
+
+        <div class="d-flex gap-4 mt-4">
+
+          <div>
+            <strong class="fs-4">
+              190
+            </strong>
+
+            <div class="small text-secondary">
+              Total rooms
+            </div>
+          </div>
+
+          <div>
+            <strong class="fs-4">
+              34
+            </strong>
+
+            <div class="small text-secondary">
+              Today's arrivals
+            </div>
+          </div>
+
+          <div>
+            <strong class="fs-4">
+              11
+            </strong>
+
+            <div class="small text-secondary">
+              Pending tasks
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- DASHBOARD UI -->
+
+      <div class="col-lg-7 reveal delay-2">
+
+        <div class="dashboard">
+
+          <div class="dash-top d-flex justify-content-between align-items-center">
+
+            <div class="window-dots">
+
+              <span></span>
+              <span></span>
+              <span></span>
+
+            </div>
+
+            <small class="text-secondary">
+              LuxeStay / Overview
+            </small>
+
+            <i class="bi bi-bell"></i>
+
+          </div>
+
+
+          <div class="dash-body">
+
+
+            <!-- SIDEBAR -->
+
+            <aside class="side">
+
+              <div class="mini-brand">
+                LuxeStay.
+              </div>
+
+              <div class="side-item active">
+                <i class="bi bi-grid me-2"></i>
+                Dashboard
+              </div>
+
+              <div class="side-item">
+                <i class="bi bi-calendar2-check me-2"></i>
+                Reservations
+              </div>
+
+              <div class="side-item">
+                <i class="bi bi-door-open me-2"></i>
+                Rooms
+              </div>
+
+              <div class="side-item">
+                <i class="bi bi-people me-2"></i>
+                Guests
+              </div>
+
+              <div class="side-item">
+                <i class="bi bi-person-badge me-2"></i>
+                Staff
+              </div>
+
+              <div class="side-item">
+                <i class="bi bi-cash-stack me-2"></i>
+                Payments
+              </div>
+
+              <div class="side-item">
+                <i class="bi bi-bar-chart me-2"></i>
+                Reports
+              </div>
+
+            </aside>
+
+
+            <!-- DASHBOARD MAIN -->
+
+            <main class="dash-main">
+
+              <div class="d-flex justify-content-between mb-3">
+
+                <div>
+
+                  <small class="text-secondary">
+                    Good morning, Admin
+                  </small>
+
+                  <h5 class="mb-0">
+                    Property Overview
+                  </h5>
+
+                </div>
+
+                <button class="btn btn-sm btn-gold">
+                  + New Booking
+                </button>
+
+              </div>
+
+
+              <!-- KPI -->
+
+              <div class="row g-2 mb-3">
+
+
+                <div class="col-6 col-xl-3">
+
+                  <div class="kpi">
+
+                    <small>
+                      Occupancy
+                    </small>
+
+                    <strong>
+                      82%
+                    </strong>
+
+                    <span class="small text-success">
+                      ↑ 6.4%
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-6 col-xl-3">
+
+                  <div class="kpi">
+
+                    <small>
+                      Revenue
+                    </small>
+
+                    <strong>
+                      ₹8.4L
+                    </strong>
+
+                    <span class="small text-success">
+                      ↑ 12.8%
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-6 col-xl-3">
+
+                  <div class="kpi">
+
+                    <small>
+                      Arrivals
+                    </small>
+
+                    <strong>
+                      34
+                    </strong>
+
+                    <span class="small text-secondary">
+                      Today
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-6 col-xl-3">
+
+                  <div class="kpi">
+
+                    <small>
+                      Available
+                    </small>
+
+                    <strong>
+                      34
+                    </strong>
+
+                    <span class="small text-secondary">
+                      Rooms
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <!-- RESERVATION TABLE -->
+
+              <div class="table-card">
+
+                <div class="d-flex justify-content-between mb-2">
+
+                  <strong class="small">
+                    Today's Reservations
+                  </strong>
+
+                  <span class="small text-secondary">
+                    View all
+                  </span>
+
+                </div>
+
+
+                <div class="table-responsive">
+
+                  <table
+                    class="table table-sm align-middle mb-0"
+                    style="font-size:.72rem"
+                  >
+
+                    <thead>
+
+                      <tr class="text-secondary">
+
+                        <th>Guest</th>
+                        <th>Room</th>
+                        <th>Check-in</th>
+                        <th>Status</th>
+
+                      </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                      <tr>
+
+                        <td>
+                          Olivia Martin
+                        </td>
+
+                        <td>
+                          204
+                        </td>
+
+                        <td>
+                          10:30 AM
+                        </td>
+
+                        <td>
+                          <span class="badge-soft">
+                            Confirmed
+                          </span>
+                        </td>
+
+                      </tr>
+
+
+                      <tr>
+
+                        <td>
+                          Arjun Mehta
+                        </td>
+
+                        <td>
+                          318
+                        </td>
+
+                        <td>
+                          11:15 AM
+                        </td>
+
+                        <td>
+                          <span class="badge-soft">
+                            Confirmed
+                          </span>
+                        </td>
+
+                      </tr>
+
+
+                      <tr>
+
+                        <td>
+                          Sophia Lee
+                        </td>
+
+                        <td>
+                          502
+                        </td>
+
+                        <td>
+                          12:40 PM
+                        </td>
+
+                        <td>
+
+                          <span
+                            class="badge-soft"
+                            style="background:#fff5e7;color:#a86f20"
+                          >
+                            Pending
+                          </span>
+
+                        </td>
+
+                      </tr>
+
+                    </tbody>
+
+                  </table>
+
+                </div>
+
+              </div>
+
+            </main>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     MODULES
+====================================================== -->
+
+<section class="section section-dark" id="modules">
+
+  <div class="container">
+
+    <div
+      class="text-center mx-auto mb-5 reveal"
+      style="max-width:720px"
+    >
+
+      <div
+        class="eyebrow"
+        style="color:#9a773d;justify-content:center"
+      >
+        Core Modules
+      </div>
+
+      <h2 class="section-title mt-3">
+        Designed around the hotel team's daily rhythm.
+      </h2>
+
+      <p class="section-copy">
+        Each module has a focused purpose while sharing
+        the same design language and data flow.
+      </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+      <!-- MODULE 1 -->
+
+      <div class="col-md-6 col-lg-4 reveal">
+
+        <div class="module">
+
+          <div class="module-num">
+            01 / FRONT DESK
+          </div>
+
+          <h3>
+            Reservations
+          </h3>
+
+          <p>
+            Fast booking workflows with clear availability
+            and guest context.
+          </p>
+
+          <ul>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Calendar & availability
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Check-in / check-out
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Booking modifications
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+
+      <!-- MODULE 2 -->
+
+      <div class="col-md-6 col-lg-4 reveal delay-1">
+
+        <div class="module">
+
+          <div class="module-num">
+            02 / OPERATIONS
+          </div>
+
+          <h3>
+            Housekeeping
+          </h3>
+
+          <p>
+            Coordinate room readiness and maintenance
+            without phone calls and spreadsheets.
+          </p>
+
+          <ul>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Room status board
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Task assignments
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Maintenance alerts
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+
+      <!-- MODULE 3 -->
+
+      <div class="col-md-6 col-lg-4 reveal delay-2">
+
+        <div class="module">
+
+          <div class="module-num">
+            03 / RELATIONSHIP
+          </div>
+
+          <h3>
+            Guest CRM
+          </h3>
+
+          <p>
+            Deliver personalized service using a complete
+            picture of every guest.
+          </p>
+
+          <ul>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Guest profiles
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Stay history
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Preferences & notes
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+
+      <!-- MODULE 4 -->
+
+      <div class="col-md-6 col-lg-4 reveal">
+
+        <div class="module">
+
+          <div class="module-num">
+            04 / FINANCE
+          </div>
+
+          <h3>
+            Billing & Payments
+          </h3>
+
+          <p>
+            Keep invoices, deposits, charges and payment
+            status together.
+          </p>
+
+          <ul>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Invoices & receipts
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Payment tracking
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Daily revenue
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+
+      <!-- MODULE 5 -->
+
+      <div class="col-md-6 col-lg-4 reveal delay-1">
+
+        <div class="module">
+
+          <div class="module-num">
+            05 / PEOPLE
+          </div>
+
+          <h3>
+            Staff Management
+          </h3>
+
+          <p>
+            Organize departments, shifts, responsibilities
+            and staff performance.
+          </p>
+
+          <ul>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Staff directory
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Roles & permissions
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Shift overview
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+
+      <!-- MODULE 6 -->
+
+      <div class="col-md-6 col-lg-4 reveal delay-2">
+
+        <div class="module">
+
+          <div class="module-num">
+            06 / MANAGEMENT
+          </div>
+
+          <h3>
+            Reports
+          </h3>
+
+          <p>
+            Turn hotel activity into clear information
+            for operational decisions.
+          </p>
+
+          <ul>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Occupancy reports
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Revenue analytics
+            </li>
+
+            <li>
+              <i class="bi bi-check2"></i>
+              Export-ready data
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     ROOM MANAGEMENT
+====================================================== -->
+
+<section class="section section-soft" id="rooms">
+
+  <div class="container">
+
+    <div class="row align-items-end mb-5">
+
+      <div class="col-lg-7 reveal">
+
+        <div class="eyebrow" style="color:#9a773d">
+          Room Management
+        </div>
+
+        <h2 class="section-title mt-3">
+          See every room's status instantly.
+        </h2>
+
+      </div>
+
+      <div class="col-lg-4 ms-auto reveal">
+
+        <p class="section-copy">
+
+          A visual room board helps reception and housekeeping
+          teams understand availability, cleaning and
+          maintenance at a glance.
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+      <!-- ROOM 1 -->
+
+      <div class="col-md-4 reveal">
+
+        <div class="room-card">
+
+          <img
+            class="room-img"
+            src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80"
+            alt="Deluxe hotel room"
+          >
+
+          <div class="room-body">
+
+            <div class="d-flex justify-content-between mb-3">
+
+              <span class="badge-soft">
+                Available
+              </span>
+
+              <span class="small text-secondary">
+                Room 204
+              </span>
+
+            </div>
+
+            <h4>
+              Deluxe King
+            </h4>
+
+            <p class="small text-secondary">
+              2 guests · King bed · City view
+            </p>
+
+            <div class="d-flex justify-content-between mt-3">
+
+              <span class="price">
+                ₹8,900
+              </span>
+
+              <small class="text-secondary">
+                / night
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ROOM 2 -->
+
+      <div class="col-md-4 reveal delay-1">
+
+        <div class="room-card">
+
+          <img
+            class="room-img"
+            src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80"
+            alt="Executive hotel suite"
+          >
+
+          <div class="room-body">
+
+            <div class="d-flex justify-content-between mb-3">
+
+              <span
+                class="badge-soft"
+                style="background:#fff5e7;color:#a86f20"
+              >
+                Occupied
+              </span>
+
+              <span class="small text-secondary">
+                Room 318
+              </span>
+
+            </div>
+
+            <h4>
+              Executive Suite
+            </h4>
+
+            <p class="small text-secondary">
+              3 guests · King bed · Lounge
+            </p>
+
+            <div class="d-flex justify-content-between mt-3">
+
+              <span class="price">
+                ₹14,500
+              </span>
+
+              <small class="text-secondary">
+                / night
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ROOM 3 -->
+
+      <div class="col-md-4 reveal delay-2">
+
+        <div class="room-card">
+
+          <img
+            class="room-img"
+            src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=80"
+            alt="Premium hotel suite"
+          >
+
+          <div class="room-body">
+
+            <div class="d-flex justify-content-between mb-3">
+
+              <span
+                class="badge-soft"
+                style="background:#fff0f0;color:#b54d4d"
+              >
+                Cleaning
+              </span>
+
+              <span class="small text-secondary">
+                Room 502
+              </span>
+
+            </div>
+
+            <h4>
+              Premium Suite
+            </h4>
+
+            <p class="small text-secondary">
+              4 guests · King bed · Balcony
+            </p>
+
+            <div class="d-flex justify-content-between mt-3">
+
+              <span class="price">
+                ₹18,900
+              </span>
+
+              <small class="text-secondary">
+                / night
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     WORKFLOW
+====================================================== -->
+
+<section class="section section-soft" id="workflow">
+
+  <div class="container">
+
+    <div
+      class="text-center mx-auto mb-5 reveal"
+      style="max-width:680px"
+    >
+
+      <div
+        class="eyebrow"
+        style="color:#9a773d;justify-content:center"
+      >
+        UX Workflow
+      </div>
+
+      <h2 class="section-title mt-3">
+        From booking to checkout,
+        without the friction.
+      </h2>
+
+    </div>
+
+
+    <div class="row g-4 process-line">
+
+
+      <div class="col-6 col-lg-3 process-step reveal">
+
+        <div class="step-circle">
+          01
+        </div>
+
+        <h5 class="mt-4">
+          Book
+        </h5>
+
+        <p class="small text-secondary">
+          Select room, dates and guest details.
+        </p>
+
+      </div>
+
+
+      <div class="col-6 col-lg-3 process-step reveal delay-1">
+
+        <div class="step-circle">
+          02
+        </div>
+
+        <h5 class="mt-4">
+          Confirm
+        </h5>
+
+        <p class="small text-secondary">
+          Secure the reservation and payment.
+        </p>
+
+      </div>
+
+
+      <div class="col-6 col-lg-3 process-step reveal delay-2">
+
+        <div class="step-circle">
+          03
+        </div>
+
+        <h5 class="mt-4">
+          Stay
+        </h5>
+
+        <p class="small text-secondary">
+          Coordinate rooms, services and requests.
+        </p>
+
+      </div>
+
+
+      <div class="col-6 col-lg-3 process-step reveal delay-3">
+
+        <div class="step-circle">
+          04
+        </div>
+
+        <h5 class="mt-4">
+          Checkout
+        </h5>
+
+        <p class="small text-secondary">
+          Close the stay and generate the invoice.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     TESTIMONIALS
+====================================================== -->
+
+<section class="section section-dark testimonial-section">
+
+  <div class="container">
+
+    <div
+      class="text-center mx-auto mb-5 reveal"
+      style="max-width:650px"
+    >
+
+      <div
+        class="eyebrow"
+        style="color:#9a773d;justify-content:center"
+      >
+        Client Perspective
+      </div>
+
+      <h2 class="section-title mt-3">
+        Built to feel premium,
+        not complicated.
+      </h2>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+      <div class="col-md-4 reveal">
+
+        <div class="testimonial">
+
+          <div class="quote">
+
+            “The interface makes a busy property feel
+            organized. Important information is always
+            close to the front desk team.”
+
+          </div>
+
+          <div class="d-flex align-items-center gap-3 mt-4">
+
+            <div class="avatar">
+              AM
+            </div>
+
+            <div>
+
+              <strong>
+                Aarav Mehta
+              </strong>
+
+              <div class="small text-secondary">
+                Hotel Operations
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="col-md-4 reveal delay-1">
+
+        <div class="testimonial">
+
+          <div class="quote">
+
+            “Room status and housekeeping tasks are much
+            easier to understand when everything is visual
+            and connected.”
+
+          </div>
+
+          <div class="d-flex align-items-center gap-3 mt-4">
+
+            <div class="avatar">
+              SK
+            </div>
+
+            <div>
+
+              <strong>
+                Sophia Kim
+              </strong>
+
+              <div class="small text-secondary">
+                Front Office Manager
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="col-md-4 reveal delay-2">
+
+        <div class="testimonial">
+
+          <div class="quote">
+
+            “A strong balance between operational detail
+            and a clean experience for management reporting.”
+
+          </div>
+
+          <div class="d-flex align-items-center gap-3 mt-4">
+
+            <div class="avatar">
+              RM
+            </div>
+
+            <div>
+
+              <strong>
+                Rohan Malik
+              </strong>
+
+              <div class="small text-secondary">
+                General Manager
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     CTA
+====================================================== -->
+
+<section class="section" id="contact">
+
+  <div class="container">
+
+    <div class="cta reveal">
+
+      <div class="row align-items-center">
+
+        <div class="col-lg-8">
+
+          <div class="eyebrow">
+            Project Showcase
+          </div>
+
+          <h2 class="section-title mt-3 mb-3">
+            A complete hotel experience,
+            designed as one system.
+          </h2>
+
+          <p
+            class="mb-0"
+            style="color:#b8c4d2;max-width:650px"
+          >
+
+            A static UX/UI portfolio concept demonstrating
+            the information architecture and visual language
+            for a modern hotel management platform.
+
+          </p>
+
+        </div>
+
+
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+
+          <button
+            class="btn btn-gold btn-lg"
+            onclick="showDemo()"
+          >
+
+            Launch Demo
+
+            <i class="bi bi-arrow-right"></i>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+  <div class="container">
+
+    <div class="row g-4 align-items-center">
+
+      <div class="col-md-6">
+
+        <div class="footer-brand">
+          LuxeStay<span class="brand-dot">.</span>
+        </div>
+
+        <div class="small mt-2">
+          Hotel Management System · UX/UI Portfolio Concept
+        </div>
+
+      </div>
+
+
+      <div class="col-md-6 text-md-end">
+
+        <div class="small">
+          Reservations · Rooms · Guests · Staff · Billing · Reports
+        </div>
+
+        <div class="small mt-2">
+          © 2026 LuxeStay Concept
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- ======================================================
+     DEMO MODAL
+====================================================== -->
+
+<div
+  class="modal fade"
+  id="demoModal"
+  tabindex="-1"
+>
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div
+      class="modal-content border-0"
+      style="border-radius:20px;overflow:hidden"
+    >
+
+      <div
+        class="modal-header"
+        style="background:#0b1727;color:white"
+      >
+
+        <h5 class="modal-title">
+          LuxeStay Interactive Preview
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+
+      </div>
+
+
+      <div class="modal-body p-4">
+
+        <div class="alert alert-success border-0">
+
+          <i class="bi bi-check-circle me-2"></i>
+
+          Demo environment ready.
+
+        </div>
+
+        <p class="text-secondary">
+
+          This is a static portfolio showcase.
+          Connect these screens to your preferred backend,
+          authentication and database for production.
+
+        </p>
+
+
+        <div class="row g-2">
+
+          <div class="col-6">
+
+            <div class="p-3 rounded-3 bg-light">
+
+              <small>
+                Today's bookings
+              </small>
+
+              <strong class="d-block fs-4">
+                34
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="col-6">
+
+            <div class="p-3 rounded-3 bg-light">
+
+              <small>
+                Occupancy
+              </small>
+
+              <strong class="d-block fs-4">
+                82%
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-footer border-0">
+
+        <button
+          class="btn btn-dark"
+          data-bs-dismiss="modal"
+        >
+          Close Preview
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Bootstrap JS -->
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<script>
+
+  /* ======================================
+     SCROLL REVEAL ANIMATION
+  ====================================== */
+
+  const observer = new IntersectionObserver(
+
+    entries => {
+
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+          entry.target.classList.add("show");
+
+          observer.unobserve(entry.target);
+
+        }
+
+      });
+
+    },
+
+    {
+      threshold: 0.12
+    }
+
+  );
+
+
+  document
+    .querySelectorAll(".reveal")
+    .forEach(element => {
+
+      observer.observe(element);
+
+    });
+
+
+  /* ======================================
+     NAVBAR SHADOW ON SCROLL
+  ====================================== */
+
+  const navbar =
+    document.querySelector(".navbar");
+
+
+  window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 30) {
+
+      navbar.style.boxShadow =
+        "0 8px 30px rgba(0,0,0,.18)";
+
+    } else {
+
+      navbar.style.boxShadow = "none";
+
+    }
+
+  });
+
+
+  /* ======================================
+     DEMO MODAL
+  ====================================== */
+
+  function showDemo() {
+
+    const modal =
+      new bootstrap.Modal(
+        document.getElementById("demoModal")
+      );
+
+    modal.show();
+
+  }
+
+</script>
+
+</body>
+</html>
